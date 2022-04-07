@@ -28,6 +28,7 @@ public class MainServer {
 
         while (true) {
             receberDados();
+            //teste
         }
         
     }
