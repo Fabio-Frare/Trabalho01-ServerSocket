@@ -12,9 +12,10 @@ public class Empresa {
     private String cnpj;
     private int qtdeFuncionarios;
     private  List<Pessoa> pessoas  = new ArrayList<>();
-    
 
- 
+    public Empresa() {
+        this.qtdeFuncionarios = 0;
+    }
 
     public String getNome() {
         return nome;
@@ -33,12 +34,12 @@ public class Empresa {
     }
 
     public int getQtdeFuncionarios() {
-        return qtdeFuncionarios;
+        return pessoas.size();
     }
 
-    public void setQtdeFuncionarios(int qtdeFuncionarios) {
-        this.qtdeFuncionarios = qtdeFuncionarios;
-    }
+//    public void setQtdeFuncionarios(int qtdeFuncionarios) {
+//        this.qtdeFuncionarios = qtdeFuncionarios;
+//    }
 
     public List<Pessoa> getPessoas() {
         return pessoas;
@@ -58,16 +59,15 @@ public class Empresa {
         }
         return msg;
     }    
-            
+                
     @Override
     public String toString() {
         return "Empresa: " +
-                "\n    Nome: " + nome + 
-                "\n    CNPJ: " + cnpj + 
-                "\n    Qtde de Funcionários: " + pessoas.size()
+                "Nome: " + nome + 
+                " CNPJ: " + cnpj + 
+                " Qtde de Funcionários: " + pessoas.size()
                 + "\nPessoas:\n" + 
                 listaPessoas();
     }
-    
     
 }

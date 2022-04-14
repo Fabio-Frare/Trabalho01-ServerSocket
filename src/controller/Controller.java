@@ -6,7 +6,7 @@ import utils.Utils;
 
 /**
  *
- * @author fabio
+ * @author Fabio e Lucas Nogueira
  */
 public class Controller {
     // {"entidade":"pessoa","endereco":"dasdsa","operacao":1,"cpf":"sadas","nome":"ada"}
@@ -27,8 +27,21 @@ public class Controller {
                 }
                 if (entidade.equalsIgnoreCase("empresa")) {
                     return datasource.addEmpresa(msg);
-                }                
-//                break;
+                }   
+                break;
+            case "5":
+                if (entidade.equalsIgnoreCase("pessoa")) {
+                    return datasource.addPessoa(msg);
+                }
+                if (entidade.equalsIgnoreCase("empresa")) {
+                    return datasource.addEmpresa(msg);
+                }
+                 if (entidade.equalsIgnoreCase("todos")) {
+                    return datasource.addEmpresa(msg);
+                }
+                break;
+            case "6":
+                return datasource.ListaEmpresas();
 //            case "UPDATE":
 //                if (entidade.equalsIgnoreCase("1")) {
 //                    msg = datasource.atualizaPessoa(msg);
@@ -39,7 +52,7 @@ public class Controller {
 //                    enviarDados(msg);
 //                }
 //                break;
-//            case "GET***":
+            case "GET":
 //                if (entidade.equalsIgnoreCase("1")) {
 //                    String cpf = msg.substring(7, msg.length());
 //                    msg = datasource.buscaPessoa(cpf);
@@ -51,7 +64,7 @@ public class Controller {
 //                    enviarDados(msg);
 //                }
 //                break;
-//            case "DELETE":
+            case "DELETE":
 //                if (entidade.equalsIgnoreCase("1")) {
 //                    String cpf = msg.substring(7, msg.length());
 //                    msg = datasource.deletaPessoa(cpf);
@@ -64,7 +77,7 @@ public class Controller {
 //                    enviarDados(msg);
 //                }
 //                break;
-//            case "LIST**":
+            case "LIST**":
 //                if (entidade.equalsIgnoreCase("1")) {
 //                    msg = datasource.ListaPessoas();
 //                    enviarDados(msg);
@@ -75,12 +88,12 @@ public class Controller {
 //                    enviarDados(msg);
 //                    receberDados();
 //                }
-                break;
+//                break;
             default:
                 System.out.println("Default switch case.");
                 break;
         }
-         return "saiu do swit case controller.";
+         return "saiu do switch case controller.";
     
     }
     

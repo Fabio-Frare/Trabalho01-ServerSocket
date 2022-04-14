@@ -8,7 +8,7 @@ import org.json.simple.parser.ParseException;
 
 /**
  *
- * @author fabio
+ * @author Fabio e Lucas Nogueira
  */
 public class Utils {
     
@@ -34,8 +34,7 @@ public class Utils {
         pessoa.setCpf((String) json.get("cpf"));
         pessoa.setEndereco((String) json.get("endereco"));
         
-//        System.out.println("teste converteJsonToPessoa: " + pessoa.getNome());
-        
+//        System.out.println("teste converteJsonToPessoa: " + pessoa.getNome());        
         return pessoa;        
 
     }
@@ -49,8 +48,7 @@ public class Utils {
         empresa.setNome((String) json.get("nome"));  
         empresa.setCnpj((String) json.get("cnpj"));
         
-        System.out.println("teste converteJsonToEmpresa: " + empresa.getNome());
-        
+//        System.out.println("teste converteJsonToEmpresa: " + empresa.getNome());        
         return empresa;        
 
     }
@@ -62,8 +60,7 @@ public class Utils {
         jsonObject = (JSONObject) parser.parse(msg);
         
         String operacao = (String) jsonObject.get("operacao");
-        System.out.println("Operacao controller: " + operacao);
-        
+//        System.out.println("Operacao controller: " + operacao);        
         return operacao;
     }
     
@@ -74,8 +71,8 @@ public class Utils {
         jsonObject = (JSONObject) parser.parse(msg);
         
         String entidade = (String) jsonObject.get("entidade");
-        System.out.println("Entidade controller: " + entidade);
-        
+//        System.out.println("Entidade controller: " + entidade);        
         return entidade;
     }
+    
 }

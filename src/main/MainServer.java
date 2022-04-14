@@ -12,7 +12,7 @@ import org.json.simple.parser.ParseException;
 
 /**
  *
- * @author fabio
+ * @author Fabio e Lucas Nogueira
  */
 public class MainServer {
     private static Socket s;
@@ -28,7 +28,6 @@ public class MainServer {
 
         while (true) {
             receberDados();
-            //teste
         }
         
     }

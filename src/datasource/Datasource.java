@@ -4,32 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Empresa;
 import model.Pessoa;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import utils.Utils;
 
 /**
  *
- * @author fabio
+ * @author Fabio e Lucas Nogueira
  */
 public class Datasource {
     private final Utils utils;
     private Pessoa pessoa;
     private Empresa empresa;
-    private final List<Pessoa> dadosPessoas;
     private final List<Empresa> dadosEmpresas;
 
     public Datasource() {
-        dadosPessoas  = new ArrayList<>();
         dadosEmpresas = new ArrayList();
         utils = new Utils();
+        populaBanco();
     }
 
     public String addPessoa(String msg) throws ParseException {   
         pessoa = new Pessoa();
-        pessoa = utils.converteJsonToPessoa(msg);    
-        dadosPessoas.add(pessoa);        
-//        System.out.println("Datasource addpessoa: " + pessoa.getNome() + "\n Tamanho: " + dadosPessoas.size());
-
+        pessoa = utils.converteJsonToPessoa(msg);         
         return "Pessoa inserida com sucesso.";
     }
 
@@ -174,4 +171,37 @@ public class Datasource {
 //        dadosEmpresas.add(empresa2);
 //
 //    }
+
+    public String ListaEmpresas() {  
+        JSONObject jsonEmpresas = new JSONObject();  
+        
+        for (Empresa dadosEmpresa : dadosEmpresas) {
+            jsonEmpresas.put("cnpj", dadosEmpresa.getCnpj());
+            jsonEmpresas.put("nome", dadosEmpresa.getNome());
+            jsonEmpresas.put("qtde", dadosEmpresa.getQtdeFuncionarios());
+        }                
+        return jsonEmpresas.toJSONString();    
+    }
+
+    private void populaBanco() {
+        Empresa e1 = new Empresa();
+        e1.setNome("Singular");
+        e1.setCnpj("123456789");
+        
+        Pessoa p1 = new Pessoa();
+        p1.setNome("Fabio");
+        p1.setCpf("123456");
+        p1.setEndereco("Rua estranha");
+        e1.getPessoas().add(p1);
+        
+        Pessoa p2 = new Pessoa();
+        p2.setNome("Lucas");
+        p2.setCpf("654321");
+        p2.setEndereco("Rua normal");
+        e1.getPessoas().add(p2);
+        
+        dadosEmpresas.add(e1);
+        
+        System.out.println(dadosEmpresas.toString());
+    }
 }
