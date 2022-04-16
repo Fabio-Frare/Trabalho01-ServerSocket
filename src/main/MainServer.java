@@ -42,7 +42,7 @@ public class MainServer {
         BufferedReader bf = new BufferedReader(in);
         String msg = bf.readLine();
         
-        System.out.println("Dados recebidos do cliente:\n" + msg); 
+//        System.out.println("Dados recebidos do cliente:\n" + msg + "\n"); 
            
         String retorno = controller.trataDados(msg);  
         enviarDados(retorno);

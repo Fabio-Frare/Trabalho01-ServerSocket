@@ -16,29 +16,38 @@ public class Datasource {
     private final Utils utils;
     private Pessoa pessoa;
     private Empresa empresa;
-    private final List<Empresa> dadosEmpresas;
+    private static final List<Empresa> dadosEmpresas = new ArrayList();;
 
     public Datasource() {
-        dadosEmpresas = new ArrayList();
-        utils = new Utils();
-        populaBanco();
+        this.utils = new Utils();
+//        populaBanco();
     }
 
     public String addPessoa(String msg) throws ParseException {   
-        pessoa = new Pessoa();
-        pessoa = utils.converteJsonToPessoa(msg);         
-        return "Pessoa inserida com sucesso.";
+        this.pessoa = new Pessoa();
+        this.pessoa = utils.converteJsonToPessoa(msg);         
+        return "Pessoa "+ pessoa.getNome() + " inserida com sucesso.";
     }
 
     public String addEmpresa(String msg) throws ParseException {
-        empresa = new Empresa();
-        
-
-        empresa = utils.converteJsonToEmpresa(msg);
-        dadosEmpresas.add(empresa);
-
-        return "Empresa inserida com sucesso.";
+        this.empresa = new Empresa();  
+        this.empresa = utils.converteJsonToEmpresa(msg);
+        dadosEmpresas.add(empresa);       
+        return "Empresa "+ empresa.getNome() + " inserida com sucesso.";
     }
+    public String ListaEmpresas() {
+        String lista = "";        
+        JSONObject jsonEmpresas = new JSONObject();  
+        
+        for (Empresa dadosEmpresa : dadosEmpresas) {
+            jsonEmpresas.put("cnpj", dadosEmpresa.getCnpj());
+            jsonEmpresas.put("nome", dadosEmpresa.getNome());
+            jsonEmpresas.put("qtde", dadosEmpresa.getQtdeFuncionarios());
+            lista += jsonEmpresas.toJSONString();
+        }   
+        return lista;    
+    }
+
 //
 //    public List<Pessoa> getDadosPessoas() {
 //        return dadosPessoas;
@@ -146,44 +155,9 @@ public class Datasource {
 //        }
 //        return "Atualização de empresa não efetuada.";
 //    }
-//
-//    public void metodoCriarObjetos() {
-//        Empresa empresa = new Empresa();
-//        empresa.setNome("Singular Sistemas");
-//        empresa.setCnpj("123");
-//        empresa.setEndereco("Rua 7 de setembro");
-//
-//        Empresa empresa2 = new Empresa();
-//        empresa2.setNome("Dalila Têxtil");
-//        empresa2.setCnpj("456");
-//        empresa2.setEndereco("Rua Mirador");
-//
-//        System.out.println("metodo criar empresa: ");
-//        Pessoa pessoa = new Pessoa();
-//        pessoa.setNome("Fábio Frare");
-//        pessoa.setCpf("123");
-//        pessoa.setEndereco("Rua 7 de setembro");
-////        pessoa.setCnpjEmpresa(empresa.getCnpj());
-////        empresa.getPessoas().add(pessoa.getCpf());
-//
-//        dadosPessoas.add(pessoa);
-//        dadosEmpresas.add(empresa);
-//        dadosEmpresas.add(empresa2);
-//
-//    }
-
-    public String ListaEmpresas() {  
-        JSONObject jsonEmpresas = new JSONObject();  
-        
-        for (Empresa dadosEmpresa : dadosEmpresas) {
-            jsonEmpresas.put("cnpj", dadosEmpresa.getCnpj());
-            jsonEmpresas.put("nome", dadosEmpresa.getNome());
-            jsonEmpresas.put("qtde", dadosEmpresa.getQtdeFuncionarios());
-        }                
-        return jsonEmpresas.toJSONString();    
-    }
-
-    private void populaBanco() {
+    
+    private void populaBanco() {        
+        if(dadosEmpresas.isEmpty()) {
         Empresa e1 = new Empresa();
         e1.setNome("Singular");
         e1.setCnpj("123456789");
@@ -201,7 +175,11 @@ public class Datasource {
         e1.getPessoas().add(p2);
         
         dadosEmpresas.add(e1);
-        
-        System.out.println(dadosEmpresas.toString());
+        }
+//        System.out.println(dadosEmpresas.toString());
     }
+
+    
+
+    
 }
