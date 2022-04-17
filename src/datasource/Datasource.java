@@ -16,11 +16,12 @@ public class Datasource {
     private final Utils utils;
     private Pessoa pessoa;
     private Empresa empresa;
-    private static final List<Empresa> dadosEmpresas = new ArrayList();;
+    private static final List<Empresa> dadosEmpresas = new ArrayList();
+    private String lista = ""; 
 
     public Datasource() {
         this.utils = new Utils();
-//        populaBanco();
+        populaBanco();
     }
 
     public String addPessoa(String msg) throws ParseException {   
@@ -35,10 +36,9 @@ public class Datasource {
         dadosEmpresas.add(empresa);       
         return "Empresa "+ empresa.getNome() + " inserida com sucesso.";
     }
-    public String ListaEmpresas() {
-        String lista = "";        
-        JSONObject jsonEmpresas = new JSONObject();  
-        
+    
+    public String ListaEmpresas() {       
+        JSONObject jsonEmpresas = new JSONObject();          
         for (Empresa dadosEmpresa : dadosEmpresas) {
             jsonEmpresas.put("cnpj", dadosEmpresa.getCnpj());
             jsonEmpresas.put("nome", dadosEmpresa.getNome());
@@ -46,6 +46,46 @@ public class Datasource {
             lista += jsonEmpresas.toJSONString();
         }   
         return lista;    
+    }
+    
+    public String listaPessoas() {
+        JSONObject jsonEmpresas = new JSONObject();    
+        for (Empresa dadosEmpresa : dadosEmpresas) {
+            jsonEmpresas.put("cnpj", dadosEmpresa.getCnpj());
+            jsonEmpresas.put("nome", dadosEmpresa.getNome());
+            jsonEmpresas.put("qtde", dadosEmpresa.getQtdeFuncionarios());
+            
+            List<Pessoa> listaPessoas = new ArrayList<>();
+            JSONObject jsonPessoas = new JSONObject(); 
+            listaPessoas = dadosEmpresa.getPessoas();
+            for (Pessoa pessoa : listaPessoas) {     
+                jsonPessoas.put("nome"    , pessoa.getNome());
+                jsonPessoas.put("cpf"     , pessoa.getCpf());
+                jsonPessoas.put("endereco", pessoa.getEndereco());
+                lista += jsonPessoas.toJSONString();
+            }
+        }   
+        return lista;    
+    }
+
+       public String listaTodos() {
+            JSONObject jsonEmpresas = new JSONObject();    
+            for (Empresa dadosEmpresa : dadosEmpresas) {
+                jsonEmpresas.put("cnpj", dadosEmpresa.getCnpj());
+                jsonEmpresas.put("nome", dadosEmpresa.getNome());
+                jsonEmpresas.put("qtde", dadosEmpresa.getQtdeFuncionarios());
+            
+            List<Pessoa> listaPessoas = new ArrayList<>();
+            JSONObject jsonPessoas = new JSONObject(); 
+            listaPessoas = dadosEmpresa.getPessoas();
+            for (Pessoa pessoa : listaPessoas) {     
+                jsonPessoas.put("nome"    , pessoa.getNome());
+                jsonPessoas.put("cpf"     , pessoa.getCpf());
+                jsonPessoas.put("endereco", pessoa.getEndereco());
+                lista += jsonPessoas.toJSONString();
+            }
+        }   
+        return lista;  
     }
 
 //
@@ -178,6 +218,9 @@ public class Datasource {
         }
 //        System.out.println(dadosEmpresas.toString());
     }
+
+
+ 
 
     
 

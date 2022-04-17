@@ -30,15 +30,15 @@ public class Controller {
                 }   
                 break;
             case "5":
-//                if (entidade.equalsIgnoreCase("pessoa")) {
-//                    return datasource.addPessoa(msg);
-//                }
+                if (entidade.equalsIgnoreCase("pessoa")) {
+                    return datasource.listaPessoas();
+                }
                 if (entidade.equalsIgnoreCase("empresa")) {
                     return datasource.ListaEmpresas();
                 }
-//                 if (entidade.equalsIgnoreCase("todos")) {
-//                    return datasource.addEmpresa(msg);
-//                }
+                 if (entidade.equalsIgnoreCase("todos")) {
+                    return datasource.listaTodos();
+                }
                 break;
             case "6":
                 return datasource.ListaEmpresas();
