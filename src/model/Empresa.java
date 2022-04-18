@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  *
- * @author fabio
+ * @author Fabio e Lucas Nogueira
  */
 public class Empresa {
     private String nome;
@@ -49,25 +49,49 @@ public class Empresa {
         this.pessoas = pessoas;
     }
 
-    private String listaPessoas() {
-        String msg = "";
-        for (Pessoa pessoa : pessoas) {
-            msg += "    "+ pessoa.getCpf();
-            msg += ";   " + pessoa.getNome();            
-            msg += ";   " + pessoa.getEndereco();
-            msg += "\n";            
-        }
-        return msg;
-    }    
-                
+//    private String listaPessoas() {
+//        String msg = "";
+//        for (Pessoa pessoa : pessoas) {
+//            msg += "    "+ pessoa.getCpf();
+//            msg += ";   " + pessoa.getNome();            
+//            msg += ";   " + pessoa.getEndereco();
+//        }
+//        return msg;
+//    }    
+//                
+//    @Override
+//    public String toString() {
+//        return "Empresa: " +
+//                "Nome: " + nome + 
+//                " CNPJ: " + cnpj + 
+//                " Qtde de Funcionários: " + pessoas.size()
+//                + "Pessoas:" + 
+//                listaPessoas();
+//    }
+    
+//     private String listaPessoas() {
+//        String msg = "";
+//        for (Pessoa pessoa : pessoas) {
+//            msg += "cpf:"+ pessoa.getCpf();
+//            msg += ",nome:" + pessoa.getNome();            
+//            msg += ",endereco:" + pessoa.getEndereco() ;           
+//        }
+//        return msg;
+//    }    
+//                
+//    @Override
+//    public String toString() {
+//        return "empresa:{" +
+//                "nome:" + nome + 
+//                ",cnpj:" + cnpj + 
+//                ",funcionários:" + pessoas.size()
+//                + ",Pessoas:" + listaPessoas()+ "}";
+//    }
+
     @Override
     public String toString() {
-        return "Empresa: " +
-                "Nome: " + nome + 
-                " CNPJ: " + cnpj + 
-                " Qtde de Funcionários: " + pessoas.size()
-                + "\nPessoas:\n" + 
-                listaPessoas();
+        return "Empresa{" + "nome=" + nome + ", cnpj=" + cnpj + ", qtdeFuncionarios=" + qtdeFuncionarios + ", pessoas=" + pessoas + '}';
     }
+    
     
 }

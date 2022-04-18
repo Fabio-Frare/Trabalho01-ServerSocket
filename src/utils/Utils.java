@@ -12,11 +12,9 @@ import org.json.simple.parser.ParseException;
  */
 public class Utils {
     
-   public String convertePessoaToJson (Pessoa pessoa, String operacao) {
+   public String convertePessoaToJson (Pessoa pessoa) {
         
         JSONObject pessoaJson = new JSONObject();  
-        pessoaJson.put("operacao", "1");
-        pessoaJson.put("entidade", "pessoa");
         pessoaJson.put("nome"    , pessoa.getNome());
         pessoaJson.put("cpf"     , pessoa.getCpf());
         pessoaJson.put("endereco", pessoa.getEndereco());
@@ -68,11 +66,19 @@ public class Utils {
         
         JSONObject jsonObject;
         JSONParser parser = new JSONParser();        
-        jsonObject = (JSONObject) parser.parse(msg);
+        jsonObject = (JSONObject) parser.parse(msg);        
+        String entidade = (String) jsonObject.get("entidade");      
         
-        String entidade = (String) jsonObject.get("entidade");
-//        System.out.println("Entidade controller: " + entidade);        
         return entidade;
+    }
+
+    public String retornaCnpjEmpresa(String msg) throws ParseException {
+        JSONObject jsonObject;
+        JSONParser parser = new JSONParser();        
+        jsonObject = (JSONObject) parser.parse(msg);
+        String cnpjEmpresa = (String) jsonObject.get("cnpj");    
+        
+        return cnpjEmpresa;
     }
     
 }
