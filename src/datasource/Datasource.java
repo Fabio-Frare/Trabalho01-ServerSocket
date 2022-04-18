@@ -72,7 +72,7 @@ public class Datasource {
        public String listaTodos() {
            
            String jsonStr = JSONArray.toJSONString(dadosEmpresas);
-            System.out.println("Lista todos: " + jsonStr);
+//            System.out.println("Lista todos: " + jsonStr);
            
 //            JSONObject jsonEmpresas = new JSONObject();
 //            for (int i = 0; i < dadosEmpresas.size(); i++) {
@@ -122,19 +122,25 @@ public class Datasource {
         } 
         return "Pessoa com o CPF: " + cpf + " não encontrada.";
     }
-       
-   
+      
+    public String deletarEmpresa(String cnpj) { 
+        String nomeEmpresa="";
+        for (Empresa dadosEmpresa : dadosEmpresas) {
+            if(dadosEmpresa.getCnpj().equalsIgnoreCase(cnpj)) {
+                nomeEmpresa = dadosEmpresa.getNome();
+                if(dadosEmpresa.getPessoas().size() > 0){
+                    return "Empresa " + nomeEmpresa + " possui pessoa vinculada não sendo possível excluir o registro.";
+                } else {
+                    dadosEmpresas.remove(dadosEmpresa);                                    
+                    return "Empresa " + nomeEmpresa + " excluído com sucesso.";
+                }
+            }
+        }   
+        return "Empresa com o CNPJ: " + cnpj + " não encontrada.";  
+    
+    }
 
-//    public String buscaPessoa(String cpf) {
-//        String pessoas = "";
-//        for (var pessoa : dadosPessoas) {
-//            if (pessoa.getCpf().equals(cpf)) {
-//                pessoas += "Nome: " + pessoa.getNome() + " CPF: " + pessoa.getCpf() + "Endereço: " + pessoa.getEndereco();
-//                return pessoas;
-//            }
-//        }
-//        return "Pessoa não encontrada.";
-//    }
+
 //
 //    public String deletaPessoa(String cpf) {
 //        for (int i = 0; i < dadosPessoas.size(); i++) {
@@ -213,6 +219,11 @@ public class Datasource {
 //        System.out.println(dadosEmpresas.toString());
     }
 
+    public String deletarPessoa(String cpfPessoa) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
     
 
 

@@ -9,7 +9,6 @@ import utils.Utils;
  * @author Fabio e Lucas Nogueira
  */
 public class Controller {
-    // {"entidade":"pessoa","endereco":"dasdsa","operacao":1,"cpf":"sadas","nome":"ada"}
     private Utils utils;
     private Datasource datasource;
 
@@ -54,37 +53,22 @@ public class Controller {
 //                    enviarDados(msg);
 //                }
 //                break;
-            case "3":
+            case "3": //GET
                 if (entidade.equalsIgnoreCase("pessoa")) {
                     return datasource.buscaPessoa(cpfPessoa);
                 }
                 if (entidade.equalsIgnoreCase("empresa")) {
                     return datasource.buscaEmpresa(cnpjEmpresa);
                 }
-//                if (entidade.equalsIgnoreCase("1")) {
-//                    String cpf = msg.substring(7, msg.length());
-//                    msg = datasource.buscaPessoa(cpf);
-//                    enviarDados(msg);
+                break;
+            case "4":  //DELETE
+//                if (entidade.equalsIgnoreCase("pessoa")) {
+//                    return datasource.deletarPessoa(cpfPessoa);
 //                }
-//                if (entidade.equalsIgnoreCase("2")) {
-//                    String cnpj = msg.substring(7, msg.length());
-//                    msg = datasource.buscaEmpresa(cnpj);
-//                    enviarDados(msg);
-//                }
-//                break;
-            case "DELETE":
-//                if (entidade.equalsIgnoreCase("1")) {
-//                    String cpf = msg.substring(7, msg.length());
-//                    msg = datasource.deletaPessoa(cpf);
-//                    enviarDados(msg);
-//                }
-//                if (entidade.equalsIgnoreCase("2")) {
-//                    String cnpj = msg.substring(7, msg.length());
-//                    System.out.println("CNPJ: " + cnpj);
-//                    msg = datasource.deletaEmpresa(cnpj);
-//                    enviarDados(msg);
-//                }
-//                break;
+                if (entidade.equalsIgnoreCase("empresa")) {
+                    return datasource.deletarEmpresa(cnpjEmpresa);
+                }
+                break;
             case "LIST**":
 //                if (entidade.equalsIgnoreCase("1")) {
 //                    msg = datasource.ListaPessoas();
@@ -101,8 +85,7 @@ public class Controller {
                 System.out.println("Default switch case.");
                 break;
         }
-         return "saiu do switch case controller.";
-    
+         return "saiu do switch case controller.";    
     }
     
     
