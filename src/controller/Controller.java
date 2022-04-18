@@ -20,6 +20,7 @@ public class Controller {
         String operacao = utils.retornaOperacao(msg);
         String entidade = utils.retornaEntidade(msg);
         String cnpjEmpresa = utils.retornaCnpjEmpresa(msg);
+        String cpfPessoa = utils.retornaCpfPessoa(msg);
         
          switch (operacao) {
             case "1":
@@ -54,11 +55,11 @@ public class Controller {
 //                }
 //                break;
             case "3":
-//                if (entidade.equalsIgnoreCase("pessoa")) {
-//                    return datasource.listaPessoas();
-//                }
+                if (entidade.equalsIgnoreCase("pessoa")) {
+                    return datasource.buscaPessoa(cpfPessoa);
+                }
                 if (entidade.equalsIgnoreCase("empresa")) {
-                    return datasource.BuscaEmpresa(cnpjEmpresa);
+                    return datasource.buscaEmpresa(cnpjEmpresa);
                 }
 //                if (entidade.equalsIgnoreCase("1")) {
 //                    String cpf = msg.substring(7, msg.length());

@@ -81,4 +81,14 @@ public class Utils {
         return cnpjEmpresa;
     }
     
+    public String retornaCpfPessoa(String msg) throws ParseException {
+        JSONObject jsonObject;
+        JSONParser parser = new JSONParser();        
+        jsonObject = (JSONObject) parser.parse(msg);
+        String cpfPessoa = (String) jsonObject.get("cpf");    
+        
+        return cpfPessoa;
+    }
+    
+    
 }

@@ -73,15 +73,13 @@ public class Datasource {
            
            String jsonStr = JSONArray.toJSONString(dadosEmpresas);
             System.out.println("Lista todos: " + jsonStr);
-            System.out.println("\n================================\n");
            
 //            JSONObject jsonEmpresas = new JSONObject();
 //            for (int i = 0; i < dadosEmpresas.size(); i++) {
 //                jsonEmpresas.put("cnpj", dadosEmpresas.get(i).getCnpj());
 //                jsonEmpresas.put("nome", dadosEmpresas.get(i).getNome());
 //                jsonEmpresas.put("qtde", dadosEmpresas.get(i).getQtdeFuncionarios());
-//                
-//              
+//
 //                String pessoas = "";
 //                List<Pessoa> listaPessoas = new ArrayList<>();
 //                int qtde = dadosEmpresas.get(i).getQtdeFuncionarios();
@@ -99,20 +97,31 @@ public class Datasource {
         return jsonStr;  
     }
        
-    public String BuscaEmpresa(String cnpj) {
+    public String buscaEmpresa(String cnpj) {
         JSONObject jsonEmpresas = new JSONObject();          
         for (Empresa dadosEmpresa : dadosEmpresas) {
             if(dadosEmpresa.getCnpj().equalsIgnoreCase(cnpj)) {
                 jsonEmpresas.put("cnpj", dadosEmpresa.getCnpj());
                 jsonEmpresas.put("nome", dadosEmpresa.getNome());
                 jsonEmpresas.put("qtde", dadosEmpresa.getQtdeFuncionarios());
-                return  jsonEmpresas.toJSONString();
+                return jsonEmpresas.toJSONString();
             }
         }   
         return "Empresa com o CNPJ " + cnpj + " não encontrada.";  
-    
     }
 
+    public String buscaPessoa(String cpf) {
+        for (int i = 0; i < dadosEmpresas.size(); i++) {
+            List<Pessoa> listaPessoas = new ArrayList<>();                             
+            listaPessoas = dadosEmpresas.get(i).getPessoas();
+            for (int j = 0; j < listaPessoas.size(); j++) {
+                if(listaPessoas.get(j).getCpf().equalsIgnoreCase(cpf)) {
+                    return utils.convertePessoaToJson(listaPessoas.get(j));
+                }
+            }    
+        } 
+        return "Pessoa com o CPF: " + cpf + " não encontrada.";
+    }
        
    
 
@@ -133,17 +142,6 @@ public class Datasource {
 //            if (dadosPessoas.get(i).getCpf().equalsIgnoreCase(cpf)) {
 //                dadosPessoas.remove(dadosPessoas.get(i));
 //                return "Pessoa excluída com sucesso.";
-//            }
-//        }
-//        return "Empresa não encontrada.";
-//    }
-//
-//    public String buscaEmpresa(String cnpj) {
-//        String empresas = "";
-//        for (var empresa : dadosEmpresas) {
-//            if (empresa.getCnpj().equals(cnpj)) {
-//                empresas += "Nome: " + empresa.getNome() + " CNPJ: " + empresa.getCnpj() + "Endereço: " + empresa.getEndereco();
-//                return empresas;
 //            }
 //        }
 //        return "Empresa não encontrada.";
@@ -195,13 +193,13 @@ public class Datasource {
         
         Pessoa p1 = new Pessoa();
         p1.setNome("Fabio");
-        p1.setCpf("123456");
+        p1.setCpf("789");
         p1.setEndereco("Rua estranha");
         e1.getPessoas().add(p1);
         
         Pessoa p2 = new Pessoa();
         p2.setNome("Lucas");
-        p2.setCpf("654321");
+        p2.setCpf("123");
         p2.setEndereco("Rua normal");
         e1.getPessoas().add(p2);
         
@@ -214,6 +212,8 @@ public class Datasource {
         }
 //        System.out.println(dadosEmpresas.toString());
     }
+
+    
 
 
 
