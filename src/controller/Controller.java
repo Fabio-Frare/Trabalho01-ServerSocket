@@ -62,9 +62,9 @@ public class Controller {
                 }
                 break;
             case "4":  //DELETE
-//                if (entidade.equalsIgnoreCase("pessoa")) {
-//                    return datasource.deletarPessoa(cpfPessoa);
-//                }
+                if (entidade.equalsIgnoreCase("pessoa")) {
+                    return datasource.deletarPessoa(cpfPessoa);
+                }
                 if (entidade.equalsIgnoreCase("empresa")) {
                     return datasource.deletarEmpresa(cnpjEmpresa);
                 }

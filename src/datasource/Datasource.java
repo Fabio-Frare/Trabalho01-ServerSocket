@@ -136,9 +136,27 @@ public class Datasource {
                 }
             }
         }   
-        return "Empresa com o CNPJ: " + cnpj + " não encontrada.";  
-    
+        return "Empresa com o CNPJ: " + cnpj + " não encontrada.";      
     }
+    
+    public String deletarPessoa(String cpf) {
+         for (int i = 0; i < dadosEmpresas.size(); i++) {
+            List<Pessoa> listaPessoas = new ArrayList<>();                             
+            listaPessoas = dadosEmpresas.get(i).getPessoas();
+            for (int j = 0; j < listaPessoas.size(); j++) {
+                if(listaPessoas.isEmpty()) {
+                    return "Não existem resgistros de pessoas cadastradas.";
+                }
+                if(listaPessoas.get(j).getCpf().equalsIgnoreCase(cpf)) {
+                    String nomePessoa =listaPessoas.get(j).getNome();
+                    dadosEmpresas.get(i).getPessoas().remove(j);
+                    return "Pessoa " + nomePessoa + " excluído com sucesso.";
+                } 
+            }    
+        } 
+        return "Pessoa com o CPF: " + cpf + " não encontrada.";
+    }
+
 
 
 //
@@ -219,10 +237,7 @@ public class Datasource {
 //        System.out.println(dadosEmpresas.toString());
     }
 
-    public String deletarPessoa(String cpfPessoa) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
     
     
 
