@@ -44,10 +44,9 @@ public class Controller {
 //            case "6":
 //                return datasource.ListaEmpresas();
             case "2":   //UPDATE
-//                if (entidade.equalsIgnoreCase("1")) {
-//                    msg = datasource.atualizaPessoa(msg);
-//                    enviarDados(msg);
-//                }
+                if (entidade.equalsIgnoreCase("pessoa")) {
+                    return datasource.atualizaPessoa(msg);
+                }
                 if (entidade.equalsIgnoreCase("empresa")) {
                     return datasource.atualizaEmpresa(msg);
                 }

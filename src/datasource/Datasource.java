@@ -22,7 +22,7 @@ public class Datasource {
 
     public Datasource() {
         this.utils = new Utils();
-        //populaBanco();
+        populaBanco();
     }
 
     public String addPessoa(String msg) throws ParseException {   
@@ -162,110 +162,69 @@ public class Datasource {
     }
     
     public String atualizaEmpresa(String msg) throws ParseException {
-        System.out.println(" datasource: "+ msg);
-        //   datasource: {"entidade":"empresa","operacao":"2","nome":"sing","cnpj":"123"}
-        Empresa empresa = new Empresa();
+        empresa = new Empresa();
         empresa = utils.converteJsonToEmpresa(msg);
-       for (int i = 0; i < dadosEmpresas.size(); i++) {
-            if(dadosEmpresas.get(i).getCnpj().equalsIgnoreCase(empresa.getCnpj())) {
+        String cnpjEmpresa = empresa.getCnpj();
+        for (int i = 0; i < dadosEmpresas.size(); i++) {
+            if(dadosEmpresas.get(i).getCnpj().equalsIgnoreCase(cnpjEmpresa)) {
                dadosEmpresas.get(i).setNome(empresa.getNome());
             }
-            return "Empresa com o CNPJ: " + empresa.getCnpj() + " atualizada."; 
+            return "Empresa com o CNPJ: " + cnpjEmpresa + " atualizada."; 
         }   
-        return "Empresa com o CNPJ: " + empresa.getCnpj() + " não encontrada.";      
+        return "Empresa com o CNPJ: " + cnpjEmpresa + " não encontrada.";      
+    }
+    
+    public String atualizaPessoa(String msg) throws ParseException {
+        pessoa = new Pessoa();
+        pessoa = utils.converteJsonToPessoa(msg);
+        String cpfPessoa = pessoa.getCpf();
+        
+        for (int i = 0; i < dadosEmpresas.size(); i++) {
+            List<Pessoa> listaPessoas = new ArrayList<>();                             
+            listaPessoas = dadosEmpresas.get(i).getPessoas();
+            for (int j = 0; j < listaPessoas.size(); j++) {
+                if(listaPessoas.get(j).getCpf().equalsIgnoreCase(cpfPessoa)) {
+                    listaPessoas.get(j).setNome(pessoa.getNome());
+                    listaPessoas.get(j).setEndereco(pessoa.getEndereco());
+                    return "Pessoa com o CPF: " + cpfPessoa + " atualizada."; 
+                }
+            } 
+        } 
+        return "Pessoa com o CPF: " + cpfPessoa + " não encontrada.";
     }
 
-
-
-//
-//    public String deletaPessoa(String cpf) {
-//        for (int i = 0; i < dadosPessoas.size(); i++) {
-//            System.out.println("deletar Pessoa: " + dadosPessoas.get(i).getCpf());
-//            if (dadosPessoas.get(i).getCpf().equalsIgnoreCase(cpf)) {
-//                dadosPessoas.remove(dadosPessoas.get(i));
-//                return "Pessoa excluída com sucesso.";
-//            }
-//        }
-//        return "Empresa não encontrada.";
-//    }
-//
-//    public String deletaEmpresa(String cnpj) {
-//        for (int i = 0; i < dadosEmpresas.size(); i++) {
-//            System.out.println("deletar Empresa: " + dadosEmpresas.get(i).getCnpj());
-//            if (dadosEmpresas.get(i).getCnpj().equalsIgnoreCase(cnpj)) {
-//                dadosEmpresas.remove(dadosEmpresas.get(i));
-////                System.out.println("empresas: " + dadosEmpresas.get(i).getNome());
-//                return "Empresa excluída com sucesso.";
-//            }
-//        }
-//        return "Empresa não encontrada.";
-//    }
-//
-//    public String atualizaPessoa(String msg) {
-//        utils = new Utils();
-//        String cpf = utils.reverteConversao(msg.substring(7, 18));
-//        pessoa = utils.converteStringPessoa(msg);
-//        for (int i = 0; i < dadosPessoas.size(); i++) {
-//            if (dadosPessoas.get(i).getCpf().equalsIgnoreCase(cpf)) {
-//                dadosPessoas.set(i, pessoa);
-//                return "Pessoa atualizado com sucesso.";
-//            }
-//        }
-//        return "Atualização de pessoa não efetuada.";
-//    }
-//
-//    public String atualizaEmpresa(String msg) {
-//        utils = new Utils();
-//        String cnpj = utils.reverteConversao(msg.substring(7, 21));
-//        empresa = utils.converteStringEmpresa(msg);
-//        for (int i = 0; i < dadosEmpresas.size(); i++) {
-//            if (dadosEmpresas.get(i).getCnpj().equalsIgnoreCase(cnpj)) {
-//                dadosEmpresas.set(i, empresa);
-//                return "Empresa atualizado com sucesso.";
-//            }
-//        }
-//        return "Atualização de empresa não efetuada.";
-//    }
-    
+    // Método auxiliar para mockar os dados para testes.
     private void populaBanco() {        
         if(dadosEmpresas.isEmpty()) {
-        Empresa e1 = new Empresa();
-        e1.setNome("Singular");
-        e1.setCnpj("123");
-        
-        Pessoa p1 = new Pessoa();
-        p1.setNome("Fabio");
-        p1.setCpf("789");
-        p1.setEndereco("Rua estranha");
-        e1.getPessoas().add(p1);
-        
-        Pessoa p2 = new Pessoa();
-        p2.setNome("Lucas");
-        p2.setCpf("123");
-        p2.setEndereco("Rua normal");
-        e1.getPessoas().add(p2);
-        
-        Empresa e2 = new Empresa();
-        e2.setNome("IPM");
-        e2.setCnpj("456");
-        
-        dadosEmpresas.add(e1);
-        dadosEmpresas.add(e2);
+            Empresa e1 = new Empresa();
+            e1.setNome("Singular");
+            e1.setCnpj("123");
+
+            Pessoa p1 = new Pessoa();
+            p1.setNome("Fabio");
+            p1.setCpf("123");
+            p1.setEndereco("Rua Presidente Getulio");
+            e1.getPessoas().add(p1);
+
+            Pessoa p2 = new Pessoa();
+            p2.setNome("Lucas");
+            p2.setCpf("456");
+            p2.setEndereco("Rua Ibirama");
+            e1.getPessoas().add(p2);
+
+            Empresa e2 = new Empresa();
+            e2.setNome("IPM");
+            e2.setCnpj("456");
+            
+            Pessoa p3 = new Pessoa();
+            p3.setNome("Marcos");
+            p3.setCpf("789");
+            p3.setEndereco("Rua Blumenau");
+            e2.getPessoas().add(p3);
+
+            dadosEmpresas.add(e1);
+            dadosEmpresas.add(e2);
         }
-//        System.out.println(dadosEmpresas.toString());
     }
-
-   
-
-    
-    
-    
-
-
-
- 
-
-    
-
     
 }
