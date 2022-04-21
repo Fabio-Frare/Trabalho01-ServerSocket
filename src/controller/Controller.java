@@ -41,18 +41,17 @@ public class Controller {
                     return datasource.listaTodos();
                 }
                 break;
-            case "6":
-                return datasource.ListaEmpresas();
-//            case "UPDATE":
+//            case "6":
+//                return datasource.ListaEmpresas();
+            case "2":   //UPDATE
 //                if (entidade.equalsIgnoreCase("1")) {
 //                    msg = datasource.atualizaPessoa(msg);
 //                    enviarDados(msg);
 //                }
-//                if (entidade.equalsIgnoreCase("2")) {
-//                    msg = datasource.atualizaEmpresa(msg);
-//                    enviarDados(msg);
-//                }
-//                break;
+                if (entidade.equalsIgnoreCase("empresa")) {
+                    return datasource.atualizaEmpresa(msg);
+                }
+                break;
             case "3": //GET
                 if (entidade.equalsIgnoreCase("pessoa")) {
                     return datasource.buscaPessoa(cpfPessoa);

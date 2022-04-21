@@ -22,7 +22,7 @@ public class Datasource {
 
     public Datasource() {
         this.utils = new Utils();
-        populaBanco();
+        //populaBanco();
     }
 
     public String addPessoa(String msg) throws ParseException {   
@@ -39,14 +39,18 @@ public class Datasource {
     }
     
     public String ListaEmpresas() {       
-        JSONObject jsonEmpresas = new JSONObject();          
-        for (Empresa dadosEmpresa : dadosEmpresas) {
+        JSONObject jsonEmpresas = new JSONObject();  
+        if(dadosEmpresas.isEmpty()) {
+            return "Não existem empresas cadastradas.";
+        } else {
+            for (Empresa dadosEmpresa : dadosEmpresas) {
             jsonEmpresas.put("cnpj", dadosEmpresa.getCnpj());
             jsonEmpresas.put("nome", dadosEmpresa.getNome());
             jsonEmpresas.put("qtde", dadosEmpresa.getQtdeFuncionarios());
             lista += jsonEmpresas.toJSONString();
         }   
-        return lista;    
+        return lista; 
+        }           
     }
     
     public String listaPessoas() {
@@ -156,6 +160,20 @@ public class Datasource {
         } 
         return "Pessoa com o CPF: " + cpf + " não encontrada.";
     }
+    
+    public String atualizaEmpresa(String msg) throws ParseException {
+        System.out.println(" datasource: "+ msg);
+        //   datasource: {"entidade":"empresa","operacao":"2","nome":"sing","cnpj":"123"}
+        Empresa empresa = new Empresa();
+        empresa = utils.converteJsonToEmpresa(msg);
+       for (int i = 0; i < dadosEmpresas.size(); i++) {
+            if(dadosEmpresas.get(i).getCnpj().equalsIgnoreCase(empresa.getCnpj())) {
+               dadosEmpresas.get(i).setNome(empresa.getNome());
+            }
+            return "Empresa com o CNPJ: " + empresa.getCnpj() + " atualizada."; 
+        }   
+        return "Empresa com o CNPJ: " + empresa.getCnpj() + " não encontrada.";      
+    }
 
 
 
@@ -236,6 +254,8 @@ public class Datasource {
         }
 //        System.out.println(dadosEmpresas.toString());
     }
+
+   
 
     
     
