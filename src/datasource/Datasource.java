@@ -18,6 +18,7 @@ public class Datasource {
     private Pessoa pessoa;
     private Empresa empresa;
     private static final List<Empresa> dadosEmpresas = new ArrayList();
+    private static final List<Pessoa>  dadosPessoa   = new ArrayList();
     private String lista = ""; 
 
     public Datasource() {
@@ -26,8 +27,10 @@ public class Datasource {
     }
 
     public String addPessoa(String msg) throws ParseException {   
-        this.pessoa = new Pessoa();
-        this.pessoa = utils.converteJsonToPessoa(msg);         
+        pessoa = utils.converteJsonToPessoa(msg);
+        
+        dadosPessoa.add(pessoa);
+        
         return "Pessoa "+ pessoa.getNome() + " inserida com sucesso.";
     }
 
@@ -38,20 +41,37 @@ public class Datasource {
         return "Empresa "+ empresa.getNome() + " inserida com sucesso.";
     }
     
-    public String ListaEmpresas() {       
-        JSONObject jsonEmpresas = new JSONObject();  
-        if(dadosEmpresas.isEmpty()) {
-            return "Não existem empresas cadastradas.";
-        } else {
-            for (Empresa dadosEmpresa : dadosEmpresas) {
-            jsonEmpresas.put("cnpj", dadosEmpresa.getCnpj());
-            jsonEmpresas.put("nome", dadosEmpresa.getNome());
-            jsonEmpresas.put("qtde", dadosEmpresa.getQtdeFuncionarios());
-            lista += jsonEmpresas.toJSONString();
-        }   
-        return lista; 
-        }           
+    public String ListaEmpresas() {  
+        JSONObject jsonEmpresas = new JSONObject();
+        int i = 0;
+        
+        for (Empresa dadosEmpresa : dadosEmpresas) {
+            JSONObject jsonEmpresa = new JSONObject();
+            jsonEmpresa.put("cnpj", dadosEmpresa.getCnpj());
+            jsonEmpresa.put("nome", dadosEmpresa.getNome());
+            jsonEmpresa.put("qtde", dadosEmpresa.getQtdeFuncionarios());
+            
+            jsonEmpresas.put(i, jsonEmpresa);
+            i++;
+        }
+        
+        return jsonEmpresas.toJSONString();
     }
+    
+//    public String ListaEmpresas() {       
+//        JSONObject jsonEmpresas = new JSONObject();  
+//        if(dadosEmpresas.isEmpty()) {
+//            return "Não existem empresas cadastradas.";
+//        } else {
+//            for (Empresa dadosEmpresa : dadosEmpresas) {
+//            jsonEmpresas.put("cnpj", dadosEmpresa.getCnpj());
+//            jsonEmpresas.put("nome", dadosEmpresa.getNome());
+//            jsonEmpresas.put("qtde", dadosEmpresa.getQtdeFuncionarios());
+//            lista += jsonEmpresas.toJSONString();
+//        }   
+//        return lista; 
+//        }           
+//    }
     
     public String listaPessoas() {
         JSONObject jsonEmpresas = new JSONObject();    
@@ -224,7 +244,49 @@ public class Datasource {
 
             dadosEmpresas.add(e1);
             dadosEmpresas.add(e2);
+            
+            dadosPessoa.add(p1);
+            dadosPessoa.add(p2);
+            dadosPessoa.add(p3);
         }
+    }
+    
+    private Empresa getEmpresaFromCnpj(String cnpjEmpresa){
+        for(Empresa e : dadosEmpresas){
+            if(e.getCnpj() == cnpjEmpresa){
+                return e;
+            }
+        }
+        
+        return new Empresa();
+    }
+    
+    private Pessoa getPessoaFromCpf(String cpfPessoa){
+        for(Pessoa p : dadosPessoa){
+            if(p.getCpf() == cpfPessoa){
+                return p;
+            }
+        }
+        
+        return new Pessoa();
+    }
+
+    public String vincularPessoaToEmpresa(String cpfPessoa, String cnpjEmpresa) {
+        String resposta = "Não foi possível vincular esta pessoa";
+        
+        if(buscaPessoa(cpfPessoa) == "Pessoa com o CPF: " + cpfPessoa + " não encontrada."){
+            Empresa empresa = getEmpresaFromCnpj(cnpjEmpresa);
+            Pessoa pessoa   = getPessoaFromCpf(cpfPessoa);
+            
+            if(empresa.getCnpj() != null && pessoa.getCpf() != null){
+                empresa.getPessoas().add(pessoa);
+            }
+        }
+        else{
+            resposta = "Esta pessoa já esta vinculada a uma empresa";
+        }
+        
+        return resposta;
     }
     
 }

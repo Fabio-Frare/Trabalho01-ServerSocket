@@ -67,6 +67,11 @@ public class Controller {
                     return datasource.deletarEmpresa(cnpjEmpresa);
                 }
                 break;
+            case "6":
+                if (entidade.equalsIgnoreCase("pessoa")) {
+                    return datasource.vincularPessoaToEmpresa(cpfPessoa, cnpjEmpresa);
+                }
+                break;
             case "LIST**":
 //                if (entidade.equalsIgnoreCase("1")) {
 //                    msg = datasource.ListaPessoas();

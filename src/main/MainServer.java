@@ -22,7 +22,7 @@ public class MainServer {
 
     public static void main(String[] args) throws IOException, ParseException {
         
-        ss = new ServerSocket(80);
+        ss = new ServerSocket(9876);
         ss.setReuseAddress(true); 
         controller = new Controller();
 
