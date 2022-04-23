@@ -73,24 +73,41 @@ public class Datasource {
 //        }           
 //    }
     
-    public String listaPessoas() {
-        JSONObject jsonEmpresas = new JSONObject();    
-        for (Empresa dadosEmpresa : dadosEmpresas) {
-            jsonEmpresas.put("cnpj", dadosEmpresa.getCnpj());
-            jsonEmpresas.put("nome", dadosEmpresa.getNome());
-            jsonEmpresas.put("qtde", dadosEmpresa.getQtdeFuncionarios());
+//    public String listaPessoas() {
+//        JSONObject jsonEmpresas = new JSONObject();    
+//        for (Empresa dadosEmpresa : dadosEmpresas) {
+//            jsonEmpresas.put("cnpj", dadosEmpresa.getCnpj());
+//            jsonEmpresas.put("nome", dadosEmpresa.getNome());
+//            jsonEmpresas.put("qtde", dadosEmpresa.getQtdeFuncionarios());
+//            
+//            List<Pessoa> listaPessoas = new ArrayList<>();
+//            JSONObject jsonPessoas = new JSONObject(); 
+//            listaPessoas = dadosEmpresa.getPessoas();
+//            for (Pessoa pessoa : listaPessoas) {     
+//                jsonPessoas.put("nome"    , pessoa.getNome());
+//                jsonPessoas.put("cpf"     , pessoa.getCpf());
+//                jsonPessoas.put("endereco", pessoa.getEndereco());
+//                lista += jsonPessoas.toJSONString();
+//            }
+//        }   
+//        return lista;    
+//    }
+    
+    public String listaPessoas() {  
+        JSONObject jsonPessoas = new JSONObject();
+        int i = 0;
+        
+        for (Pessoa dadosPessoa : dadosPessoa) {
+            JSONObject jsonPessoa = new JSONObject();
+            jsonPessoa.put("cnpj", dadosPessoa.getCpf());
+            jsonPessoa.put("nome", dadosPessoa.getNome());
+            jsonPessoa.put("endereco", dadosPessoa.getEndereco());
             
-            List<Pessoa> listaPessoas = new ArrayList<>();
-            JSONObject jsonPessoas = new JSONObject(); 
-            listaPessoas = dadosEmpresa.getPessoas();
-            for (Pessoa pessoa : listaPessoas) {     
-                jsonPessoas.put("nome"    , pessoa.getNome());
-                jsonPessoas.put("cpf"     , pessoa.getCpf());
-                jsonPessoas.put("endereco", pessoa.getEndereco());
-                lista += jsonPessoas.toJSONString();
-            }
-        }   
-        return lista;    
+            jsonPessoas.put(i, jsonPessoa);
+            i++;
+        }
+        
+        return jsonPessoas.toJSONString();
     }
 
        public String listaTodos() {
