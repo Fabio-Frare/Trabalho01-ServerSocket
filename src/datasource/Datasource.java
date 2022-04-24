@@ -134,7 +134,7 @@ public class Datasource {
 //                }               
 //                lista += jsonEmpresas.toJSONString();
 //                System.out.println("Lista datasource: " + lista);
-//        }              
+//        }    
         return jsonStr;  
     }
        
@@ -215,19 +215,33 @@ public class Datasource {
         pessoa = new Pessoa();
         pessoa = utils.converteJsonToPessoa(msg);
         String cpfPessoa = pessoa.getCpf();
+        String resposta = "Pessoa com o CPF: " + cpfPessoa + " não encontrada.";
+        boolean sucesso = false;
+        
+        for(int i = 0; i < dadosPessoa.size(); i++){
+            if(dadosPessoa.get(i).getCpf().equalsIgnoreCase(cpfPessoa)) {
+                dadosPessoa.set(i, pessoa);
+                sucesso = true;
+                break;
+            }
+        }
         
         for (int i = 0; i < dadosEmpresas.size(); i++) {
-            List<Pessoa> listaPessoas = new ArrayList<>();                             
+            List<Pessoa> listaPessoas = new ArrayList<>();
             listaPessoas = dadosEmpresas.get(i).getPessoas();
             for (int j = 0; j < listaPessoas.size(); j++) {
                 if(listaPessoas.get(j).getCpf().equalsIgnoreCase(cpfPessoa)) {
                     listaPessoas.get(j).setNome(pessoa.getNome());
                     listaPessoas.get(j).setEndereco(pessoa.getEndereco());
-                    return "Pessoa com o CPF: " + cpfPessoa + " atualizada."; 
                 }
             } 
-        } 
-        return "Pessoa com o CPF: " + cpfPessoa + " não encontrada.";
+        }
+        
+        if(sucesso){
+            resposta = "Pessoa com o CPF: " + cpfPessoa + " atualizada.";
+        }
+        
+        return resposta;
     }
 
     // Método auxiliar para mockar os dados para testes.
@@ -270,7 +284,7 @@ public class Datasource {
     
     private Empresa getEmpresaFromCnpj(String cnpjEmpresa){
         for(Empresa e : dadosEmpresas){
-            if(e.getCnpj() == cnpjEmpresa){
+            if(e.getCnpj().equalsIgnoreCase(cnpjEmpresa)){
                 return e;
             }
         }
@@ -280,7 +294,7 @@ public class Datasource {
     
     private Pessoa getPessoaFromCpf(String cpfPessoa){
         for(Pessoa p : dadosPessoa){
-            if(p.getCpf() == cpfPessoa){
+            if(p.getCpf().equalsIgnoreCase(cpfPessoa)){
                 return p;
             }
         }
@@ -291,12 +305,13 @@ public class Datasource {
     public String vincularPessoaToEmpresa(String cpfPessoa, String cnpjEmpresa) {
         String resposta = "Não foi possível vincular esta pessoa";
         
-        if(buscaPessoa(cpfPessoa) == "Pessoa com o CPF: " + cpfPessoa + " não encontrada."){
+        if((buscaPessoa(cpfPessoa)).equalsIgnoreCase("Pessoa com o CPF: " + cpfPessoa + " não encontrada.")){
             Empresa empresa = getEmpresaFromCnpj(cnpjEmpresa);
             Pessoa pessoa   = getPessoaFromCpf(cpfPessoa);
             
             if(empresa.getCnpj() != null && pessoa.getCpf() != null){
                 empresa.getPessoas().add(pessoa);
+                resposta = "Cpf " + cpfPessoa + " associado a empresa " + empresa.getNome();
             }
         }
         else{
