@@ -151,17 +151,27 @@ public class Datasource {
         return "Empresa com o CNPJ " + cnpj + " não encontrada.";  
     }
 
-    public String buscaPessoa(String cpf) {
-        for (int i = 0; i < dadosEmpresas.size(); i++) {
-            List<Pessoa> listaPessoas = new ArrayList<>();                             
-            listaPessoas = dadosEmpresas.get(i).getPessoas();
-            for (int j = 0; j < listaPessoas.size(); j++) {
-                if(listaPessoas.get(j).getCpf().equalsIgnoreCase(cpf)) {
-                    return utils.convertePessoaToJson(listaPessoas.get(j));
-                }
-            }    
-        } 
-        return "Pessoa com o CPF: " + cpf + " não encontrada.";
+//    public String buscaPessoa(String cpf) {
+//        for (int i = 0; i < dadosEmpresas.size(); i++) {
+//            List<Pessoa> listaPessoas = new ArrayList<>();                             
+//            listaPessoas = dadosEmpresas.get(i).getPessoas();
+//            for (int j = 0; j < listaPessoas.size(); j++) {
+//                if(listaPessoas.get(j).getCpf().equalsIgnoreCase(cpf)) {
+//                    return utils.convertePessoaToJson(listaPessoas.get(j));
+//                }
+//            }    
+//        } 
+//        return "Pessoa com o CPF: " + cpf + " não encontrada.";
+//    }
+    
+    public String buscaPessoa(String cpfPessoa){
+        for(Pessoa p : dadosPessoa){
+            if(p.getCpf().equalsIgnoreCase(cpfPessoa)){
+                return utils.convertePessoaToJson(p);
+            }
+        }
+        
+        return "Pessoa com o CPF: " + cpfPessoa + " não encontrada.";
     }
       
     public String deletarEmpresa(String cnpj) { 
@@ -180,22 +190,52 @@ public class Datasource {
         return "Empresa com o CNPJ: " + cnpj + " não encontrada.";      
     }
     
+//    public String deletarPessoa(String cpf) {
+//         for (int i = 0; i < dadosEmpresas.size(); i++) {
+//            List<Pessoa> listaPessoas = new ArrayList<>();                             
+//            listaPessoas = dadosEmpresas.get(i).getPessoas();
+//            for (int j = 0; j < listaPessoas.size(); j++) {
+//                if(listaPessoas.isEmpty()) {
+//                    return "Não existem resgistros de pessoas cadastradas.";
+//                }
+//                if(listaPessoas.get(j).getCpf().equalsIgnoreCase(cpf)) {
+//                    String nomePessoa =listaPessoas.get(j).getNome();
+//                    dadosEmpresas.get(i).getPessoas().remove(j);
+//                    return "Pessoa " + nomePessoa + " excluído com sucesso.";
+//                } 
+//            }    
+//        }
+//        return "Pessoa com o CPF: " + cpf + " não encontrada.";
+//    }
+
     public String deletarPessoa(String cpf) {
-         for (int i = 0; i < dadosEmpresas.size(); i++) {
+        String resposta   = "Pessoa com o CPF: " + cpf + " não encontrada.";
+        String nomePessoa = "";
+        boolean sucesso   = false;
+        
+        for(int i = 0; i < dadosPessoa.size(); i++){
+            if(dadosPessoa.get(i).getCpf().equalsIgnoreCase(cpf)){
+                nomePessoa = dadosPessoa.get(i).getNome();
+                dadosPessoa.remove(i);
+                sucesso = true;
+                break;
+            }
+        }
+        
+        for (int i = 0; i < dadosEmpresas.size(); i++) {
             List<Pessoa> listaPessoas = new ArrayList<>();                             
             listaPessoas = dadosEmpresas.get(i).getPessoas();
             for (int j = 0; j < listaPessoas.size(); j++) {
-                if(listaPessoas.isEmpty()) {
-                    return "Não existem resgistros de pessoas cadastradas.";
-                }
                 if(listaPessoas.get(j).getCpf().equalsIgnoreCase(cpf)) {
-                    String nomePessoa =listaPessoas.get(j).getNome();
                     dadosEmpresas.get(i).getPessoas().remove(j);
-                    return "Pessoa " + nomePessoa + " excluído com sucesso.";
-                } 
+                }
             }    
-        } 
-        return "Pessoa com o CPF: " + cpf + " não encontrada.";
+        }
+        
+        if(sucesso){
+            resposta = "Pessoa " + nomePessoa + " excluído com sucesso.";
+        }
+        return resposta;
     }
     
     public String atualizaEmpresa(String msg) throws ParseException {
