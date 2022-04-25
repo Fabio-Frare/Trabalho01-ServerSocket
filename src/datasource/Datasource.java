@@ -19,7 +19,6 @@ public class Datasource {
     private Empresa empresa;
     private static final List<Empresa> dadosEmpresas = new ArrayList();
     private static final List<Pessoa>  dadosPessoa   = new ArrayList();
-    private String lista = ""; 
 
     public Datasource() {
         this.utils = new Utils();
@@ -41,7 +40,7 @@ public class Datasource {
         return "Empresa "+ empresa.getNome() + " inserida com sucesso.";
     }
     
-    public String ListaEmpresas() {  
+    public String listaEmpresas() {  
         JSONObject jsonEmpresas = new JSONObject();
         int i = 0;
         
@@ -58,48 +57,13 @@ public class Datasource {
         return jsonEmpresas.toJSONString();
     }
     
-//    public String ListaEmpresas() {       
-//        JSONObject jsonEmpresas = new JSONObject();  
-//        if(dadosEmpresas.isEmpty()) {
-//            return "Não existem empresas cadastradas.";
-//        } else {
-//            for (Empresa dadosEmpresa : dadosEmpresas) {
-//            jsonEmpresas.put("cnpj", dadosEmpresa.getCnpj());
-//            jsonEmpresas.put("nome", dadosEmpresa.getNome());
-//            jsonEmpresas.put("qtde", dadosEmpresa.getQtdeFuncionarios());
-//            lista += jsonEmpresas.toJSONString();
-//        }   
-//        return lista; 
-//        }           
-//    }
-    
-//    public String listaPessoas() {
-//        JSONObject jsonEmpresas = new JSONObject();    
-//        for (Empresa dadosEmpresa : dadosEmpresas) {
-//            jsonEmpresas.put("cnpj", dadosEmpresa.getCnpj());
-//            jsonEmpresas.put("nome", dadosEmpresa.getNome());
-//            jsonEmpresas.put("qtde", dadosEmpresa.getQtdeFuncionarios());
-//            
-//            List<Pessoa> listaPessoas = new ArrayList<>();
-//            JSONObject jsonPessoas = new JSONObject(); 
-//            listaPessoas = dadosEmpresa.getPessoas();
-//            for (Pessoa pessoa : listaPessoas) {     
-//                jsonPessoas.put("nome"    , pessoa.getNome());
-//                jsonPessoas.put("cpf"     , pessoa.getCpf());
-//                jsonPessoas.put("endereco", pessoa.getEndereco());
-//                lista += jsonPessoas.toJSONString();
-//            }
-//        }   
-//        return lista;    
-//    }
-    
     public String listaPessoas() {  
         JSONObject jsonPessoas = new JSONObject();
         int i = 0;
         
         for (Pessoa dadosPessoa : dadosPessoa) {
             JSONObject jsonPessoa = new JSONObject();
-            jsonPessoa.put("cnpj", dadosPessoa.getCpf());
+            jsonPessoa.put("cpf", dadosPessoa.getCpf());
             jsonPessoa.put("nome", dadosPessoa.getNome());
             jsonPessoa.put("endereco", dadosPessoa.getEndereco());
             
@@ -110,31 +74,8 @@ public class Datasource {
         return jsonPessoas.toJSONString();
     }
 
-       public String listaTodos() {
-           
-           String jsonStr = JSONArray.toJSONString(dadosEmpresas);
-//            System.out.println("Lista todos: " + jsonStr);
-           
-//            JSONObject jsonEmpresas = new JSONObject();
-//            for (int i = 0; i < dadosEmpresas.size(); i++) {
-//                jsonEmpresas.put("cnpj", dadosEmpresas.get(i).getCnpj());
-//                jsonEmpresas.put("nome", dadosEmpresas.get(i).getNome());
-//                jsonEmpresas.put("qtde", dadosEmpresas.get(i).getQtdeFuncionarios());
-//
-//                String pessoas = "";
-//                List<Pessoa> listaPessoas = new ArrayList<>();
-//                int qtde = dadosEmpresas.get(i).getQtdeFuncionarios();
-//                if(qtde > 0) {                    
-//                    listaPessoas = dadosEmpresas.get(i).getPessoas();
-//                    for (int j = 0; j < listaPessoas.size(); j++) {
-//                        pessoas += utils.convertePessoaToJson(listaPessoas.get(j));
-//                    }
-//                    jsonEmpresas.put("pessoa", pessoas);
-//                    
-//                }               
-//                lista += jsonEmpresas.toJSONString();
-//                System.out.println("Lista datasource: " + lista);
-//        }    
+    public String listaTodos() {
+        String jsonStr = JSONArray.toJSONString(dadosEmpresas);    
         return jsonStr;  
     }
        
@@ -150,19 +91,6 @@ public class Datasource {
         }   
         return "Empresa com o CNPJ " + cnpj + " não encontrada.";  
     }
-
-//    public String buscaPessoa(String cpf) {
-//        for (int i = 0; i < dadosEmpresas.size(); i++) {
-//            List<Pessoa> listaPessoas = new ArrayList<>();                             
-//            listaPessoas = dadosEmpresas.get(i).getPessoas();
-//            for (int j = 0; j < listaPessoas.size(); j++) {
-//                if(listaPessoas.get(j).getCpf().equalsIgnoreCase(cpf)) {
-//                    return utils.convertePessoaToJson(listaPessoas.get(j));
-//                }
-//            }    
-//        } 
-//        return "Pessoa com o CPF: " + cpf + " não encontrada.";
-//    }
     
     public String buscaPessoa(String cpfPessoa){
         for(Pessoa p : dadosPessoa){
@@ -189,24 +117,6 @@ public class Datasource {
         }   
         return "Empresa com o CNPJ: " + cnpj + " não encontrada.";      
     }
-    
-//    public String deletarPessoa(String cpf) {
-//         for (int i = 0; i < dadosEmpresas.size(); i++) {
-//            List<Pessoa> listaPessoas = new ArrayList<>();                             
-//            listaPessoas = dadosEmpresas.get(i).getPessoas();
-//            for (int j = 0; j < listaPessoas.size(); j++) {
-//                if(listaPessoas.isEmpty()) {
-//                    return "Não existem resgistros de pessoas cadastradas.";
-//                }
-//                if(listaPessoas.get(j).getCpf().equalsIgnoreCase(cpf)) {
-//                    String nomePessoa =listaPessoas.get(j).getNome();
-//                    dadosEmpresas.get(i).getPessoas().remove(j);
-//                    return "Pessoa " + nomePessoa + " excluído com sucesso.";
-//                } 
-//            }    
-//        }
-//        return "Pessoa com o CPF: " + cpf + " não encontrada.";
-//    }
 
     public String deletarPessoa(String cpf) {
         String resposta   = "Pessoa com o CPF: " + cpf + " não encontrada.";
@@ -245,8 +155,8 @@ public class Datasource {
         for (int i = 0; i < dadosEmpresas.size(); i++) {
             if(dadosEmpresas.get(i).getCnpj().equalsIgnoreCase(cnpjEmpresa)) {
                dadosEmpresas.get(i).setNome(empresa.getNome());
+               return "Empresa com o CNPJ: " + cnpjEmpresa + " atualizada."; 
             }
-            return "Empresa com o CNPJ: " + cnpjEmpresa + " atualizada."; 
         }   
         return "Empresa com o CNPJ: " + cnpjEmpresa + " não encontrada.";      
     }

@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 import org.json.simple.parser.ParseException;
 
 
@@ -21,10 +22,14 @@ public class MainServer {
     private static Controller controller;
 
     public static void main(String[] args) throws IOException, ParseException {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Indique uma porta para a aplicação servidor: ");
+        int port = sc.nextInt();
         
-        ss = new ServerSocket(9876);
+        ss = new ServerSocket(port);
         ss.setReuseAddress(true); 
         controller = new Controller();
+        System.out.println("Iniciado");
 
         while (true) {
             receberDados();
@@ -41,8 +46,6 @@ public class MainServer {
         BufferedReader bf = new BufferedReader(in);
         String msg = bf.readLine();
         
-//        System.out.println("Dados recebidos do cliente: " + msg + "\n"); 
-           
         String retorno = controller.trataDados(msg);  
         enviarDados(retorno);
     }
@@ -52,6 +55,5 @@ public class MainServer {
         pr.println(msg);
         pr.flush();
     }
-    
     
 }

@@ -35,14 +35,12 @@ public class Controller {
                     return datasource.listaPessoas();
                 }
                 if (entidade.equalsIgnoreCase("empresa")) {
-                    return datasource.ListaEmpresas();
+                    return datasource.listaEmpresas();
                 }
                  if (entidade.equalsIgnoreCase("todos")) {
                     return datasource.listaTodos();
                 }
                 break;
-//            case "6":
-//                return datasource.ListaEmpresas();
             case "2":   //UPDATE
                 if (entidade.equalsIgnoreCase("pessoa")) {
                     return datasource.atualizaPessoa(msg);
@@ -72,25 +70,11 @@ public class Controller {
                     return datasource.vincularPessoaToEmpresa(cpfPessoa, cnpjEmpresa);
                 }
                 break;
-            case "LIST**":
-//                if (entidade.equalsIgnoreCase("1")) {
-//                    msg = datasource.ListaPessoas();
-//                    enviarDados(msg);
-//                    receberDados();
-//                }
-//                if (entidade.equalsIgnoreCase("2")) {
-//                    msg = datasource.ListaEmpresas();
-//                    enviarDados(msg);
-//                    receberDados();
-//                }
-//                break;
             default:
                 System.out.println("Default switch case.");
                 break;
         }
          return "saiu do switch case controller.";    
     }
-    
-    
     
 }

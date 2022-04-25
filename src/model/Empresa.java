@@ -37,10 +37,6 @@ public class Empresa {
         return pessoas.size();
     }
 
-//    public void setQtdeFuncionarios(int qtdeFuncionarios) {
-//        this.qtdeFuncionarios = qtdeFuncionarios;
-//    }
-
     public List<Pessoa> getPessoas() {
         return pessoas;
     }
@@ -49,49 +45,9 @@ public class Empresa {
         this.pessoas = pessoas;
     }
 
-//    private String listaPessoas() {
-//        String msg = "";
-//        for (Pessoa pessoa : pessoas) {
-//            msg += "    "+ pessoa.getCpf();
-//            msg += ";   " + pessoa.getNome();            
-//            msg += ";   " + pessoa.getEndereco();
-//        }
-//        return msg;
-//    }    
-//                
-//    @Override
-//    public String toString() {
-//        return "Empresa: " +
-//                "Nome: " + nome + 
-//                " CNPJ: " + cnpj + 
-//                " Qtde de Funcionários: " + pessoas.size()
-//                + "Pessoas:" + 
-//                listaPessoas();
-//    }
-    
-//     private String listaPessoas() {
-//        String msg = "";
-//        for (Pessoa pessoa : pessoas) {
-//            msg += "cpf:"+ pessoa.getCpf();
-//            msg += ",nome:" + pessoa.getNome();            
-//            msg += ",endereco:" + pessoa.getEndereco() ;           
-//        }
-//        return msg;
-//    }    
-//                
-//    @Override
-//    public String toString() {
-//        return "empresa:{" +
-//                "nome:" + nome + 
-//                ",cnpj:" + cnpj + 
-//                ",funcionários:" + pessoas.size()
-//                + ",Pessoas:" + listaPessoas()+ "}";
-//    }
-
     @Override
     public String toString() {
         return "Empresa{" + "nome=" + nome + ", cnpj=" + cnpj + ", qtdeFuncionarios=" + qtdeFuncionarios + ", pessoas=" + pessoas + '}';
     }
-    
     
 }
